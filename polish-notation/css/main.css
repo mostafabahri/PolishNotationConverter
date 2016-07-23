@@ -1,0 +1,14 @@
+.top-buffer {
+	margin-top: 200px;
+}
+
+.vertical-line{
+	border-right: 2px solid #bbb;	
+}
+.gradient {
+  background: linear-gradient(to bottom, #aaa, #fff);
+}
+.page-header.gradient{
+	padding: 30px;
+	margin: 0 0 50px 0;
+}
