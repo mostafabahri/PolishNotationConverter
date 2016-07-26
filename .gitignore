@@ -4,4 +4,4 @@ bower_components/
 
 #files
 *.sublime-*
-
+*.py

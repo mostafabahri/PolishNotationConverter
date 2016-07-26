@@ -1,14 +1,42 @@
 .top-buffer {
-	margin-top: 200px;
+    margin-top: 200px;
 }
-
-.vertical-line{
-	border-right: 2px solid #bbb;	
+.vertical-line {
+    border-right: 1px solid #bbb;
 }
 .gradient {
-  background: linear-gradient(to bottom, #aaa, #fff);
+  background:linear-gradient(rgb(33, 230, 224),#fff);
 }
-.page-header.gradient{
-	padding: 30px;
-	margin: 0 0 50px 0;
+
+input[type=text]{
+  -webkit-transition: all 0.15s ease;
+  -o-transition: all 0.15s ease;
+  transition: all 0.9s ease;
+}
+.page-header{
+  position: relative;
+  top:-20px;
+}
+
+.page-header.gradient {
+    padding: 50px;
+    margin: 0 0 50px 0;
+}
+
+input[type="text"]:read-only {
+    background: rgb(214, 241, 238);
+}
+
+@media (max-width: 991px) {
+    .col-md-4 {
+        margin-bottom: 10px;
+    }
+    .vertical-line {
+        border: 0;
+    }
+}
+
+.rndclass{
+  position: absolute;
+  color: rgba(255, 0, 0, 0.5);
 }
