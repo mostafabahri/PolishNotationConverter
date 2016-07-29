@@ -35,8 +35,3 @@ input[type="text"]:read-only {
         border: 0;
     }
 }
-
-.rndclass{
-  position: absolute;
-  color: rgba(255, 0, 0, 0.5);
-}
