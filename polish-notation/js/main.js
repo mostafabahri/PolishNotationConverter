@@ -6,13 +6,7 @@ function readonlify(arg) {
 function readwritify(arg) {
     return $(arg).prop('readonly', false).attr('value', null);
 }
-//
-// var inputIDs = [];
-// $(".container").find(":input").each(function() {
-//     inputIDs.push(this.id);
-// });
-// var res = prefixToInfix("*/345");
-// console.log(res);
+
 
 var notes = $(".container ").find(":input ");
 var _pre = notes[0],
@@ -26,32 +20,39 @@ notes.each(function(index) {
 });
 
 $(_pre).on('input', function(event) {
-    var res = prefixToInfix(this.value);
-    if (res != -1 && res.length > 1) {
-        _in.value = res;
-        _post.value = prefixToPostfix(this.value);
+    if (this.value) {
+        var res = prefixToInfix(this.value);
+        if (res != -1 && res.length > 1) {
+            _in.value = res;
+            _post.value = prefixToPostfix(this.value);
+        }
     }
 }).focusout(function functionName() {
-    readwritify(_in);
-    readwritify(_post);
-    var res = prefixToInfix(this.value);
-    if (res == -1) {
-        $(this).parent().addClass('has-error');
-    } else {
-        _in.value = res;
-        console.log(prefixToPostfix(this.value));
-        _post.value = prefixToPostfix(this.value);
-        $(this).parent().removeClass('has-error');
-        $(this).parent().addClass('has-success');
+    if (this.value) {
+        readwritify(_in);
+        readwritify(_post);
+        var res = prefixToInfix(this.value);
+        if (res == -1) {
+            $(this).parent().addClass('has-error');
+            _in.value = _post.value = null;
+        } else {
+            _in.value = res;
+            console.log(prefixToPostfix(this.value));
+            _post.value = prefixToPostfix(this.value);
+            $(this).parent().removeClass('has-error');
+            $(this).parent().addClass('has-success');
+        }
     }
 }).focusin(function functionName() {
-    console.log("focused in ");
-    readonlify(_in);
-    readonlify(_post);
+    if (true) {
+        console.log("focused in ");
+        readonlify(_in);
+        readonlify(_post);
+    }
 }).keyup(function() {
     if (!this.value) {
         _in.value = _post.value = null;
-        // $(this).parent().removeClass('has-error').removeClass('has-success');
+        $(this).parent().removeClass('has-error').removeClass('has-success');
     }
 });
 
@@ -81,7 +82,7 @@ $(_in).on('input', function(event) {
 }).keyup(function() {
     if (!this.value) {
         _pre.value = _post.value = null;
-        // $(this).parent().removeClass('has-error').removeClass('has-success');
+        $(this).parent().removeClass('has-error').removeClass('has-success');
     }
 });
 
@@ -111,6 +112,6 @@ $(_post).on('input', function(event) {
 }).keyup(function() {
     if (!this.value) {
         _in.value = _pre.value = null;
-        // $(this).parent().removeClass('has-error').removeClass('has-success');
+        $(this).parent().removeClass('has-error').removeClass('has-success');
     }
 });

@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Notation Core</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.0.1.css">
+    <script src="https://code.jquery.com/qunit/qunit-2.0.1.js"></script>
+    <script src="base.js"></script>
+    <script src="prefix.js"></script>
+    <script src="postfix.js"></script>
+    <script src="infix.js"></script>
+
+      <script class="PREFIX">
+        QUnit.test("Prefix Validation", function(assert) {
+            assert.equal(validPrefix("+34"), true);
+            assert.equal(validPrefix("+/354"), true);
+            assert.equal(validPrefix("+3/4G"), true);
+            assert.equal(validPrefix("+/*3541"), true);
+            assert.equal(validPrefix("A+B"), false);
+            assert.equal(validPrefix("34+"), false);
+            assert.equal(validPrefix("3/45"), false);
+            assert.equal(validPrefix("?34"), false);
+
+            assert.equal(validPrefix("*+a-bc/-de+-fgh"), true);
+            assert.equal(validPrefix("+++aFcd"), true);
+            assert.equal(validPrefix("-*/1-7+113+2+1Z"), true);
+        });
+
+
+        QUnit.test("Prefix To Infix", function(assert) {
+            assert.equal(prefixToInfix("+34"), "(3+4)");
+            assert.equal(prefixToInfix("+/354"), "((3/5)+4)");
+            assert.equal(prefixToInfix("+3/4G"), "(3+(4/G))");
+            assert.equal(prefixToInfix("+/*3541"), "(((3*5)/4)+1)");
+            assert.equal(prefixToInfix("*+a-bc/-de+-fgh"),
+                "((a+(b-c))*((d-e)/((f-g)+h)))");
+            assert.equal(prefixToInfix("+++aFcd"), "(((a+F)+c)+d)");
+            assert.equal(prefixToInfix("-*/1-7+113+2+5Z"),
+                "(((1/(7-(1+1)))*3)-(2+(5+Z)))");
+        });
+
+        QUnit.test("Prefix To Postfix", function(assert) {
+            assert.equal(prefixToPostfix("+34"), "34+");
+            assert.equal(prefixToPostfix("+/354"), "35/4+");
+            assert.equal(prefixToPostfix("+3/4G"), "34G/+");
+            assert.equal(prefixToPostfix("+/*3541"), "35*4/1+");
+            assert.equal(prefixToPostfix("*+a-bc/-de+-fgh"),
+                "abc-+de-fg-h+/*");
+            assert.equal(prefixToPostfix("+++aFcd"), "aF+c+d+");
+            assert.equal(prefixToPostfix("-*/1-7+113+2+5Z"),
+                "1711+-/3*25Z++-");
+        });
+
+    </script>
+    <script class="POSTFIX">
+    QUnit.test("Postfix Validation", function(assert) {
+        assert.equal(validPostfix("+34"), false);
+        assert.equal(validPostfix("+/354"), false);
+        assert.equal(validPostfix("+3/4G"), false);
+        assert.equal(validPostfix("+/*3541"), false);
+        assert.equal(validPostfix("A+B"), false);
+        assert.equal(validPostfix("3/45"), false);
+        assert.equal(validPostfix("?34"), false);
+        assert.equal(validPostfix("*+a-bc/-de+-fgh"), false);
+
+        assert.equal(validPostfix("aF+c+d+"), true);
+        assert.equal(validPostfix("1711+-/3*25Z++-"), true);
+        assert.equal(validPostfix("34+"), true);
+    });
+      QUnit.test("Postfix To Prefix", function(assert) {
+          assert.equal(postfixToPrefix("34+"), "+34");
+          assert.equal(postfixToPrefix("35/4+"), "+/354");
+          assert.equal(postfixToPrefix("34G/+"), "+3/4G");
+          assert.equal(postfixToPrefix("35*4/1+"), "+/*3541");
+          assert.equal(postfixToPrefix("abc-+de-fg-h+/*"),
+              "*+a-bc/-de+-fgh");
+          assert.equal(postfixToPrefix("aF+c+d+"), "+++aFcd");
+          assert.equal(postfixToPrefix("1711+-/3*25Z++-"),
+              "-*/1-7+113+2+5Z");
+      });
+
+
+      QUnit.test("Postfix To Infix", function(assert) {
+          assert.equal(postfixToInfix("34+"), "(3+4)");
+          assert.equal(postfixToInfix("35/4+"), "((3/5)+4)");
+          assert.equal(postfixToInfix("34G/+"), "(3+(4/G))");
+          assert.equal(postfixToInfix("35*4/1+"), "(((3*5)/4)+1)");
+          assert.equal(postfixToInfix("abc-+de-fg-h+/*"),
+              "((a+(b-c))*((d-e)/((f-g)+h)))");
+          assert.equal(postfixToInfix("aF+c+d+"), "(((a+F)+c)+d)");
+          assert.equal(postfixToInfix("1711+-/3*25Z++-"),
+              "(((1/(7-(1+1)))*3)-(2+(5+Z)))");
+      });
+
+    </script>
+
+
+    <script class="INFIX">
+      QUnit.test("Infix to Prefix", function(assert) {
+
+        assert.equal(infixToPrefix("(3+4)"), "+34");
+        assert.equal(infixToPrefix("+/354"), "((3/5)+4)");
+        assert.equal(infixToPrefix("+3/4G"), "(3+(4/G))");
+        assert.equal(infixToPrefix("+/*3541"), "(((3*5)/4)+1)");
+        assert.equal(infixToPrefix("*+a-bc/-de+-fgh"),
+            "((a+(b-c))*((d-e)/((f-g)+h)))");
+        assert.equal(infixToPrefix("+++aFcd"), "(((a+F)+c)+d)");
+        assert.equal(infixToPrefix("-*/1-7+113+2+5Z"),
+            "(((1/(7-(1+1)))*3)-(2+(5+Z)))");
+      });
+            QUnit.test("Infix to Postfix", function(assert) {
+
+                assert.equal(infixtoPostfix("3+5"), "35+");
+                assert.equal(infixtoPostfix("3+5/6"), "356/+");
+                assert.equal(infixtoPostfix("(3+5)/4"), "35+4/");
+                assert.equal(infixtoPostfix("(3+5)/4"), "35+4/");
+            });
+            //
+            // QUnit.test("Validate Infix", function(assert) {
+            //   //FALSE SUITE
+            //     //position and number of arguments of the binary operator
+            //     assert.equal(validInfix("+"), false);
+            //     assert.equal(validInfix("+/"), false);
+            //     assert.equal(validInfix("+5"), false);
+            //     assert.equal(validInfix("+58"), false);
+            //     assert.equal(validInfix("5+"), false);
+            //     assert.equal(validInfix("58+"), false);
+            //
+            //     //parens
+            //     //left paren
+            //     assert.equal(validInfix("("), false);
+            //     assert.equal(validInfix("(+"), false);
+            //     assert.equal(validInfix("(5+"), false);
+            //     assert.equal(validInfix("(+5"), false);
+            //     assert.equal(validInfix("(+58"), false);
+            //     assert.equal(validInfix("(5+"), false);
+            //     //right paren
+            //     assert.equal(validInfix(")"), false);
+            //     assert.equal(validInfix(")+"), false);
+            //     assert.equal(validInfix(")5+"), false);
+            //     assert.equal(validInfix(")+5"), false);
+            //     assert.equal(validInfix(")+58"), false);
+            //     assert.equal(validInfix(")5+"), false);
+            //
+            //     //other forms
+            //     assert.equal(validInfix("5*8/"), false);
+            //     assert.equal(validInfix("*5/8"), false);
+            //     assert.equal(validInfix("/58*"), false);
+            //     assert.equal(validInfix("/5*8-"), false);
+            //
+            // //TRUE SUITE
+            //     assert.equal(validInfix("5+8"), true);//13
+            //     assert.equal(validInfix("6+5/2"), true);//8.5
+            //     assert.equal(validInfix("1+5+8^3"), true);//30
+            //     assert.equal(validInfix("(5+8)"), true);//13
+            //     assert.equal(validInfix("((5+9)/2)"), true);//7
+            //     assert.equal(validInfix("((8+8)/4*6)+7"), true);//31
+            //
+            // });
+
+            // QUnit.test("prefix tests", function(assert) {
+            //     assert.equal(infixToPrefix("(5+8)"), "+58")
+            //     assert.equal(prefixToInfix("+34"), "(3+4)");
+            //     assert.equal(postfixToInfix("36+"), "(3+6)");
+            // });
+    </script>
+
+</head>
+
+<body>
+    <div id="qunit"></div>
+
+</body>
+
+</html>
