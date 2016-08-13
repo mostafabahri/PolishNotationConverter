@@ -1,5 +1,6 @@
 //all tests passed
 function validPrefix(exp) {
+    console.log("prefix validity");
     exp = reverse_arr(exp.split(""));
     var watch; // holds number of operands
     watch = 0;
@@ -14,11 +15,7 @@ function validPrefix(exp) {
     }
     return watch === 1;
 }
-/**
-}
-  * @param  {string} exp         input string as prefix
-  * @return {string} stack top   correspoing infix notation
-  */
+
 function prefixToInfix(exp) {
     rev_exp = reverse_arr(exp.split(""));
     stack = [];
@@ -35,10 +32,6 @@ function prefixToInfix(exp) {
     return stack[stack.length - 1]; //stack top
 }
 
-/**
- * @param  {string} exp         input string as prefix
- * @return {string} stack top   correspoing post notation
- */
 function prefixToPostfix(exp) {
     rev_exp = reverse_arr(exp.split(""));
     stack = [];
@@ -54,26 +47,3 @@ function prefixToPostfix(exp) {
     }
     return stack[stack.length - 1]; //stack top
 }
-
-
-
-// //target is {in,post}
-// function prefixToOther(exp, target) {
-//     rev_exp = reverse_arr(exp.split(""));
-//     stack = [];
-//     for (var i = 0; i < rev_exp.length; i++) {
-//         var c = rev_exp[i];
-//         if (isOperand(c)) {
-//             stack.push(c);
-//         } else if (isOperator(c)) {
-//             lhs = stack.pop();
-//             rhs = stack.pop();
-//             if(target){
-//             stack.push('(' + lhs + c + rhs + ')');
-//           }else{
-//             stack.push(lhs + rhs + c);
-//           }
-//         }
-//     }
-//     return stack[stack.length - 1]; //stack top
-// }

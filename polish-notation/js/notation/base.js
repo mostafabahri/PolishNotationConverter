@@ -1,3 +1,12 @@
+/***
+NOTE:
+  I am aware there are much duplicate code in other js code here.
+  I'm saving them for the sake of having individual function for
+  each conversion between notations (as a reference if you will).
+  6 functions total.
+***/
+
+
 function reverse_arr(s) {
     for (var i = s.length - 1, r = []; i >= 0; r.push(s[i--])) {}
     return r;

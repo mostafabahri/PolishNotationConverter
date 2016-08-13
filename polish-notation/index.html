@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Polish Notation</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/assets/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -23,7 +23,10 @@
 					<input type="text" id="prefixInput" class="form-control"
 					placeholder="Start typing...">
 				</div>
+					<div class="alert alert-danger " id="preAlert">
+			<span class="text-center"><strong>Error!</strong> Invalid prefix expression!</span>
 			</div>
+		</div>
 			<div class="col-md-4 vertical-line">
 				<div class="input-group">
 					<span class="input-group-addon" id="infixAddon">[In]fix  </span>
@@ -51,9 +54,14 @@
 	</div>
 
 </body>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/notation.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/assets/jquery.min.js"></script>
+<script type="text/javascript" src="js/assets/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="js/notation/base.js"></script>
+<script type="text/javascript" src="js/notation/prefix.js"></script>
+<script type="text/javascript" src="js/notation/infix.js"></script>
+<script type="text/javascript" src="js/notation/postfix.js"></script>
+
+<script type="text/javascript" src="js/main_dom.js"></script>
 
 </html>
