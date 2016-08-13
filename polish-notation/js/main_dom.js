@@ -1,14 +1,26 @@
 // 'use strict'
 
 $.fn.readwritify = function() { //used to rest to normal state
-    this.prop('readonly', false).attr('value', null);
+    this
+        .prop('readonly', false)
+        // .attr('value', null);
 };
-
 $.fn.readonlify = function() { //when one input is focused, othes must be off!
-    this.prop('readonly', true).attr('value', "computing...");
+    this
+        .prop('readonly', true)
+        // .attr('value', "computing...");
+        console.log("in readonlify", this);
 };
-$.fn.remove_has_class = function() {
-    this.parent().removeClass('has-error').removeClass('has-success');
+$.fn.remove_has_classes = function() {
+    this.parent()
+        .removeClass('has-error')
+        .removeClass('has-success');
+};
+$.fn.add_error = function() {
+    this.parent().addClass('has-error');
+};
+$.fn.add_success = function() {
+    this.parent().addClass('has-error');
 };
 
 var notes = $(":input[type='text']");
@@ -36,40 +48,41 @@ var validity_func = {
 function event_handler(main, other_nots, other_functions, validity_func) {
     $(main).on('input', function(event) { //on inputing every char
             if (validity_func(this.value)) {
-                other_nots[0].value = other_functions[0](this.value);
-                other_nots[1].value = other_functions[1](this.value);
+                for (var i = 0; i < 2; i++)
+                    other_nots[i].value = other_functions[i](this.value);
             }
-        })
-        .focusout(function() {
-            console.log("out: ", this.value);
-            if (this.value) {
-                $(other_nots).readwritify();
-                if (!validity_func(this.value)) {
-                    $(this).parent().addClass('has-error');
-                    if (main === _pre) {
-                        console.log("its _pre");
-                        $("#preAlert").slideDown("slow");
-                    }
-                    $(other_nots).val('');
-                } else {
-                    $(this).parent().removeClass('has-error').addClass('has-success');
-                }
-            } else {
-                other_nots[0].value = other_nots[1].value = null;
-                $(this).parent().removeClass('has-error').removeClass('has-success');
-                // $(other_nots).readonlify();
-            }
-        })
-        .focusin(function() {
-            $(other_nots).readonlify();
-            $(other_nots).remove_has_class();
         })
         .keyup(function() { //on text remove(backspace,del)
             if (!this.value) { //if this empty , set to default
                 $(other_nots).val('');
-                $(this).parent().removeClass('has-error').removeClass('has-success');
+                $(this).remove_has_classes();
             }
-        }).focus(function() {
+        })
+        .focusin(function() {
+            $(other_nots).readonlify();
+            $(other_nots).remove_has_classes();
+        })
+        .focusout(function() {
+            console.log("out: ", this.value);
+            if (this.value) { // foucout and non empty
+                $(other_nots).readwritify();
+                if (!validity_func(this.value)) { //invalid input, turn red!
+                    $(this).remove_has_classes().add_error();
+                    // if (main === _pre) {
+                    //     console.log("its _pre");
+                    //     $("#preAlert").slideDown("slow");
+                    // }
+                    $(other_nots).val('');
+                } else {
+                    $(this).remove_has_classes().add_success();
+                }
+            } else {
+                $(other_nots).val('');
+                $(this).remove_has_classes();
+                $(other_nots).readwritify();
+            }
+        })
+        .focus(function() { // for convenience
             $(this).select();
         });
 }
