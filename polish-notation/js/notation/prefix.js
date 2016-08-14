@@ -1,6 +1,6 @@
 //all tests passed
 function validPrefix(exp) {
-    console.log("prefix validity");
+    // console.log("prefix validity");
     exp = reverse_arr(exp.split(""));
     var watch; // holds number of operands
     watch = 0;
