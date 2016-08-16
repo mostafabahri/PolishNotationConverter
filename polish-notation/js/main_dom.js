@@ -60,6 +60,8 @@ function activate_tooltip(arg) {
         container:"body"
     });
 }
+
+$(".example").hide();
 ////////////this one///////////
 function event_handler(main, other_nots, other_functions, validity_func) {
     $(main).on('input', function(event) { //on inputing every char
@@ -78,6 +80,13 @@ function event_handler(main, other_nots, other_functions, validity_func) {
             }
         })
         .focusin(function() {
+          if (this === _pre) {
+              $(".example").eq(0).show('fast');
+          } else if (this === _in) {
+              $(".example").eq(1).show('fast');
+          } else {
+              $(".example").eq(2).show('fast');
+          }
           if(!this.value){
             $(other_nots).readonlify();
             $(other_nots).remove_has_classes();}
