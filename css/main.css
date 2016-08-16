@@ -1,0 +1,57 @@
+.top-buffer {
+    margin-top: 500px;
+}
+.vertical-line {
+    border-right: 1px solid #bbb;
+}
+.gradient {
+    background: linear-gradient(#aa2332, #fff);
+}
+input[type=text] {
+    -webkit-transition: all 0.15s ease;
+    -o-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+}
+.page-header {
+    font-family: 'Oswald', sans-serif;
+    position: relative;
+    top: -20px;
+    color: hsl(42, 96%, 5%);
+}
+.input-group-addon {
+    background: #e0e2d5;
+}
+.page-header.gradient {
+    padding: 50px;
+    margin: 0 0 50px 0;
+}
+.container {
+    font-weight: 200;
+}
+input[type="text"]:read-only {
+    background: hsl(182, 70%, 80%);
+}
+.example {
+    color: #555;
+    padding: 10px 20px;
+}
+@media (max-width: 991px) {
+    .col-md-4 {
+        margin-bottom: 10px;
+    }
+    .vertical-line {
+        border: 0;
+    }
+}
+.glyphicon{
+  font-size: 30px;
+}
+.alert {
+    padding: 1rem;
+    margin-bottom: 2px;
+}
+.tooltip.bottom .tooltip-inner {
+    font-size: 14px;
+    background-color: #aa2332;
+    text-transform: capitalize;
+}
